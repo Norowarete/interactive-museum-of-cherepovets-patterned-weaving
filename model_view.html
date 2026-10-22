@@ -1,123 +1,173 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta
-        name = "viewport"
-        content="width=device-width, initial-scale=1.0"
-        >
-        <meta charset="UTF-8">
-        <link
-        rel="stylesheet"
-        href="css/style.css"
-        >
-        <title>Виртуальный музей череповецкого ткачества</title>
-        <link 
-        rel="icon"
-        type="image/svg"
-        href="images/Logo.svg"
-        >
-        
-        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    </head>
-    <body>
-        <header>
-            <a href="index.html">
-                <img src="images/Logo.svg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Виртуальный музей Череповецкого узорного ткачества</title>
+    <link rel="icon" href="./icons/Logo.svg">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="header-menu">
+            <a href="/" class="header-logo">
+                <img
+                    src="./images/Logo.svg"
+                    alt="Logo"
+                    class="header-logo-image"
+                    width="168"
+                    height="60"
+                >
             </a>
-            <div class="dropdown">
-            <a href="history.html">История ▼</a>
-                <div class="dropdown-content">
-                    <a href="#">До 1922 года</a>
-                    <a href="#">1922 - 1991 года</a>
-                    <a href="#">1991 - наше время</a>
-                </div>
-            </div>
-            <a href="archive.html">Архив</a>
-            <a href="patterns.html">Узоры </a>
-            <a href="technology.html">Технология</a>
-            <a href="art_laboratory.html">Художественная лаборатория</a>
-            <div class="dropdown">
-                <a href="for_visitors.html">Посетителям ▼</a>
-                <div class="dropdown-content">
-                    <a href="#">Режим работы</a>
-                    <a href="#">Как добраться?</a>
-                    <a href="#">Контакты</a>
-                    <a href="#">Правила посещения</a>
-                    <a href="#">Прейскурант</a>
-                    <a href="#">Купить билеты</a>
-                </div>
-            </div>
-            <a href="about_us.html">О нас</a>
 
-        </header>
-        <div class = "content_box">
-           
-            <model-viewer 
-            src="3d model/stanok.glb"
-            camera-controls
-            auto-rotate
-            style="width: 100%; height: 500px;">
-            </model-viewer>
-            
+            <button class="burger" id="burgerBtn" type="button" aria-expanded="false" aria-controls="headerMenuList" aria-label="Открыть меню">
+                <span></span><span></span><span></span>
+            </button>
 
+            <ul class="header-menu-list" id="headerMenuList">
+                <li class="header-menu-item has-dropdown">
+                    <a href="history.html" class="header-menu-link" aria-haspopup="true" aria-expanded="false" aria-controls="dd-history">
+                        История
+                        <svg class="chev" aria-hidden="true" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <ul class="drop-down-menu" id="dd-history">
+                        <li><a href="#" class="header-menu-link">До 1992 г.</a></li>
+                        <li><a href="#" class="header-menu-link">1922-1991 гг.</a></li>
+                        <li><a href="#" class="header-menu-link">1922- н.в.</a></li>
+                    </ul>
+                </li>
+                <li class="header-menu-item">
+                    <a href="archive.html" class="header-menu-link">Архив</a>
+                </li>
+                <li class="header-menu-item">
+                    <a href="patterns.html" class="header-menu-link">Узоры</a>
+                </li>
+                <li class="header-menu-item">
+                    <a href="technology.html" class="header-menu-link">Технология</a>
+                </li>
+                <li class="header-menu-item">
+                    <a href="art_laboratory.html" class="header-menu-link">Художественная лаборатория</a>
+                </li>
+                <li class="header-menu-item has-dropdown">
+                    <a href="for_visitors.html" class="header-menu-link" aria-haspopup="true" aria-expanded="false" aria-controls="dd-visitors">
+                        Для посетителей
+                        <svg class="chev" aria-hidden="true" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <ul class="drop-down-menu" id="dd-visitors">
+                        <li><a href="#" class="header-menu-link">Режим работы</a></li>
+                        <li><a href="#" class="header-menu-link">Как добраться?</a></li>
+                        <li><a href="#" class="header-menu-link">Контакты</a></li>
+                        <li><a href="#" class="header-menu-link">Правила посещения</a></li>
+                        <li><a href="#" class="header-menu-link">Прейскурант</a></li>
+                        <li><a href="#" class="header-menu-link">Купить билеты</a></li>
+                    </ul>
+                </li>
+                <li class="header-menu-item">
+                    <a href="about_us.html" class="header-menu-link">О нас</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <main>
+        <div class="content_box">
+            <div class="content_box">
+    <nav class="breadcrumbs" id="breadcrumbs"
+         aria-label="Хлебные крошки">
+    </nav>
+
+    <!-- Остальное содержимое страницы -->
+</div>
         </div>
+    </main>
 
-        <footer class="footer">
-
-            <div class="footer_top">
-                <img src="images/Logo.svg" class="footer_logo">
-
-                <div class="social">
-                    <span>Следите за нами в соцсетях</span>
-                    <div class="icons">
-                        <a href="https://vk.com/so_tkano" target="_blank" class="icon vk" aria-label="VK"></a>
-                        <a href="https://t.me/sotkano35" target="_blank" class="icon tg" aria-label="Telegram"></a>
-                        <a href="https://web.max.ru/join/ZP-BqmWJRjoI35gHtNaMyyftVI4tb3S01Lz1C1qqefo" target="_blank" class="icon max" aria-label="Max"></a>
+    <footer class="footer">
+        <div class="footer-inner">
+            <a href="/" class="header-logo">
+            <img
+                src="./images/Logo.svg"
+                alt="Logo"
+                width="168"
+                height="60"
+                loading="lazy"
+            >
+            </a>
+            <div class="social_media">
+                <span>Следите за нами в соцсетях</span>
+                <a href="https://t.me/sotkano35" class="social-icon" target="_blank" aria-label="Telegram">
+                <img
+                    src="./icons/TG.svg"
+                    alt=""
+                    width="45"
+                    height="45"
+                    loading="lazy"
+                >
+                </a>
+                <a href="https://vk.com/so_tkano" class="social-icon" target="_blank" aria-label="ВКонтакте">
+                <img
+                    src="./icons/VK.svg"
+                    alt=""
+                    width="45"
+                    height="45"
+                    loading="lazy"
+                >
+                </a>
+                <a href="https://web.max.ru/join/ZP-BqmWJRjoI35gHtNaMyyftVI4tb3S01Lz1C1qqefo" class="social-icon" target="_blank" aria-label="Max">
+                <img
+                    src="./icons/Max.svg"
+                    alt=""
+                    width="45"
+                    height="45"
+                    loading="lazy"
+                >
+                </a>
+            </div>
+        </div>
+        <div class="footer-line"></div>
+        <div class="footer-main">
+            <div class="footer-links">
+                <div class="footer-main-column">
+                        <a href="for_visitors.html" class="footer-title">Посетителям</a>
+                        <a href="#">Режим работы</a>
+                        <a href="#">Как добраться?</a>
+                        <a href="#">Контакты</a>
+                        <a href="#">Правила посещения</a>
+                        <a href="#">Прейскурант</a>
+                        <a href="#">Купить билеты</a>
+                </div>
+                <div class="footer-main-column split-column">
+                    <div class="footer-main-column-history-row">
+                        <a href="history.html" class="footer-title">История</a>
+                        <a href="#">До 1922 г.</a>
+                        <a href="#">1922–1991 гг.</a>
+                        <a href="#">1991–н.в.</a>
+                    </div>
+                    <div class="footer-main-column-other-row">
+                        <a href="art_laboratory.html" class="footer-title">Художественная лаборатория</a>
+                        <a href="technology.html" class="footer-title">Технология</a>
+                        <a href="archive.html" class="footer-title">Архив</a>
                     </div>
                 </div>
-            </div>
-
-            <hr>
-
-            <div class="footer_main">
-
-                <div class="column">
-                    <h4>Посетителям</h4>
-                    <a href="#">Режим работы</a>
-                    <a href="#">Как добраться?</a>
-                    <a href="#">Контакты</a>
-                    <a href="#">Правила посещения</a>
-                    <a href="#">Прейскурант</a>
-                    <a href="#">Купить билеты</a>
-                </div>
-
-                <div class="column">
-                    <h4>История</h4>
-                    <a href="#">До 1922 г.</a>
-                    <a href="#">1922–1991 гг.</a>
-                    <a href="#">1991–н.в.</a>
-
-                    <h4>Художественная лаборатория</h4>
-                    <h4>Технология</h4>
-                    <h4>Архив</h4>
-                </div>
-
-                <div class="column">
-                    <h4>Узоры</h4>
+                <div class="footer-main-column">
+                    <a href="patterns.html" class="footer-title">Узоры</a>
                     <a href="#">Конструктор узоров</a>
-
-                    <h4>О нас</h4>
+                </div>
+                <div class="footer-main-column">
+                    <a href="about_us.html" class="footer-title">О нас</a>
                     <a href="#">Сотрудники</a>
                 </div>
-
-                <div class="column right">
-                    <p>© 2017–2026 Соткано вручную</p>
-                    <p>Все права защищены.</p>
-                    <p>Правила использования материалов с сайта</p>
-                </div>
-
             </div>
 
-        </footer>
-    </body>
+            <div class="footer-legal">
+                <p>© 2017–2026 Соткано вручную</p>
+                <p>Все права защищены.</p>
+                <a href="#">Правила использования материалов с сайта</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./script.js" defer></script>
+</body>
 </html>

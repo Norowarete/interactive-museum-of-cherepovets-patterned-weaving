@@ -66,13 +66,20 @@ table {
 	border-spacing: 0;
 }
 
+/* добавлено: без этого padding у бургера/кнопок будет увеличивать их реальный размер */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body{
     background-color: #DDCEB3;
     background-image: url('./images/safespace.png');
+    font-family: 'Inter', -apple-system, "Segoe UI", sans-serif;
 }
 
 a{
     color: #EFE6D6;
+    text-decoration: none;
     transition-duration: .3s;
 }
 
@@ -80,13 +87,17 @@ a:hover{
     color: #DDCEB3;
 }
 
+/* ===== Хедер ===== */
+
 .header-menu{
     background-color: #7C6158;
-    min-width: 1300px;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 40px;
     height: 60px;
+    padding: 0 24px;
+    position: relative;
 }
 
 .header-menu-list{
@@ -100,21 +111,48 @@ a:hover{
     flex-shrink: 0;
 }
 
-.header-menu-item:hover > ul{
-    display: initial;
-}
-
 .header-menu-link{
-    text-decoration: none;
-    font-family: 'Montserrat';
+    display: flex;
+    align-items: center;
+    gap: 6px;
     white-space: nowrap;
-    display: block;
     transition: .3s;
     padding: 15px;
 }
 
+.header-menu-link .chev{
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+    transition: transform .2s ease;
+}
+
+.header-menu-item.is-open > .header-menu-link .chev{
+    transform: rotate(180deg);
+}
+
+@media (min-width: 881px){
+    .header-menu-item:hover > .header-menu-link .chev,
+    .header-menu-item:focus-within > .header-menu-link .chev{
+        transform: rotate(180deg);
+    }
+}
+
 .header-menu-link.is-current{
     text-decoration: underline;
+}
+
+/* .is-open работает всегда (JS, клик по названию). :hover/:focus-within — только на десктопе:
+   на мобильном фокус остаётся на ссылке после тапа и мешал бы списку закрываться вторым кликом */
+.header-menu-item.is-open > .drop-down-menu{
+    display: block;
+}
+
+@media (min-width: 881px){
+    .header-menu-item:hover > .drop-down-menu,
+    .header-menu-item:focus-within > .drop-down-menu{
+        display: block;
+    }
 }
 
 .drop-down-menu .header-menu-link:hover{
@@ -123,41 +161,165 @@ a:hover{
 
 .drop-down-menu{
     position: absolute;
+    top: 100%;
     left: 0;
+    min-width: 120px;
     background-color: #7C6158;
     display: none;
     padding-top: 6px;
+    /* выше блока контента и боковых панелей, чтобы список не уходил под них */
+    z-index: 40;
 }
+
+.drop-down-menu .header-menu-link{
+    padding: 8px 14px;
+}
+
+/* Бургер-кнопка — на десктопе скрыта, появляется в медиа-запросе ниже */
+.burger{
+    display: none;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 55; /* выше панели (50) и подложки (45) — иначе после центрирования кнопка оказывается под выезжающим меню и по ней нельзя кликнуть */
+}
+.burger span{
+    width: 22px;
+    height: 2px;
+    background-color: #EFE6D6;
+    transition: transform .25s ease, opacity .2s ease;
+}
+.burger.is-open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.burger.is-open span:nth-child(2){ opacity: 0; }
+.burger.is-open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+/* Затемнение фона под выезжающей мобильной панелью */
+.nav-overlay{
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+    z-index: 45;
+}
+.nav-overlay.is-open{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.burger:focus-visible,
+.header-menu-link:focus-visible{
+    outline: 2px solid #EFE6D6;
+    outline-offset: 2px;
+}
+
+/* ===== Мобильная версия хедера ===== */
+@media (max-width: 880px){
+    .burger{
+        display: flex;
+    }
+
+    .header-menu-list{
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: min(86vw, 320px);
+        flex-direction: column;
+        align-items: stretch;
+        background-color: #7C6158;
+        padding: 80px 20px 24px;
+        overflow-y: auto;
+        transform: translateX(100%);
+        transition: transform .3s ease;
+        z-index: 50;
+    }
+
+    .header-menu-list.is-open{
+        transform: translateX(0);
+    }
+
+    .header-menu-item{
+        width: 100%;
+        border-bottom: 1px solid rgba(239, 230, 214, 0.15);
+    }
+
+    /* на мобильном подменю раскрывается ниже ссылки, а не всплывает поверх */
+    .drop-down-menu{
+        position: static;
+        width: 100%;
+        padding-top: 0;
+        padding-left: 12px;
+        min-width: 0;
+    }
+
+    .nav-overlay{
+        display: block;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .burger span,
+    .header-menu-list,
+    .header-menu-link .chev,
+    .nav-overlay{
+        transition: none !important;
+    }
+}
+
+/* ===== Контент и футер (без изменения дизайна, только чтобы не было горизонтального скролла) ===== */
 
 .content_box{
     background-color: #EFE6D6;
     background-image: url('./images/content_box.png');
     background-repeat: no-repeat;
     background-size: cover;
-    margin: auto;
-    width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
     min-height: 100vh;
+    padding: 0 24px;
 }
 
 .footer{
-    text-decoration: none;
-    font-family: 'Montserrat';
+    /* высота полосы-орнамента: кратна 34 (1 клетка = 3px при 102px, 5px при 170px),
+       иначе клетки получатся неровными */
+    --ornament-h: 102px;
+
     color: #EFE6D6;
-    min-height: 200px;
     background-color: #7C6158;
+    /* орнамент из Figma повторяется по всей верхней грани футера */
+    background-image: url('./images/footer-pattern.svg');
+    background-repeat: repeat-x;
+    background-position: center top;
+    background-size: auto var(--ornament-h);
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 0 26px;
 }
 
+/* верхняя строка (лого + соцсети) ровно по высоте полосы — орнамент у неё «за спиной» */
 .footer-inner{
     display: flex;
     align-items: center;
-    padding-top: 5px;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-bottom: 5px;
-    width: 1200px;
+    flex-wrap: wrap;
+    gap: 16px;
+    min-height: var(--ornament-h);
+    padding: 0 24px;
+    width: 100%;
+    max-width: 1200px;
     justify-content: space-between;
 }
 
@@ -165,22 +327,236 @@ a:hover{
     display: flex;
     align-items: center;
     gap: 10px;
+    font-size: 0.9rem;
+}
+
+.social_media span{
+    margin-right: 6px;
+    white-space: nowrap;
+}
+
+/* иконки соцсетей — отдельный класс, а не header-logo: это другой по смыслу элемент.
+   без обёртки-кружка — используются готовые лого как есть, в исходном размере */
+.social-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity .2s ease;
+}
+.social-icon img{
+    width: 45px;
+    height: 45px;
+}
+.social-icon:hover{
+    opacity: 0.8;
 }
 
 .footer-line{
     width: 100%;
     height: 1px;
-    background-color: #EFE6D6;
+    background-color: rgba(239, 230, 214, 0.35);
+    margin: 0 auto;
 }
 
 .footer-main{
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 26px 24px 0;
+}
+
+.footer-links{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
 }
 
 .footer-main-column{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: 9px;
+    min-width: 130px;
+}
+
+.footer-main-column a{
+    font-size: 0.92rem;
+}
+
+/* жирные пункты-заголовки колонок (Посетителям, История, Узоры, О нас,
+   а также Художественная лаборатория / Технология / Архив без своих подпунктов) */
+.footer-title{
+    font-weight: 700;
+}
+
+.split-column{
+    gap: 9px; /* отступ между блоком «История» и «Художественная лаборатория» — как между остальными пунктами */
+}
+
+.footer-main-column-history-row,
+.footer-main-column-other-row{
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.footer-legal{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    gap: 6px;
+    margin-left: auto;
+    font-size: 0.88rem;
+    opacity: 0.85;
+    white-space: nowrap;
+}
+
+.footer-legal p{
+    margin: 0;
+}
+
+@media (max-width: 880px){
+    .footer-main{
+        flex-direction: column;
+        gap: 28px;
+    }
+
+    .footer-legal{
+        align-items: flex-start;
+        text-align: left;
+        margin-left: 0;
+        white-space: normal;
+    }
+}
+
+/* на узких экранах лого и соцсети не помещаются в одну строку — встают друг под другом,
+   а полоса орнамента становится выше (клетка 5px), чтобы обе строки лежали на ней */
+@media (max-width: 640px){
+    .footer{
+        --ornament-h: 170px;
+    }
+
+    .footer-inner{
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .social_media{
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 6px;
+    }
+
+    .social_media span{
+        width: 100%;
+        margin: 0;
+        text-align: center;
+    }
+}
+
+@media (max-width: 560px){
+    .footer-links{
+        flex-direction: column;
+        gap: 24px;
+    }
+}
+
+/* ===== Хлебные крошки ===== */
+
+.breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding-top: 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.breadcrumbs a {
+    color: #7C6158;
+    transition: color 0.3s ease;
+}
+
+.breadcrumbs a:hover {
+    color: #A18472;
+}
+
+.breadcrumbs-separator {
+    color: #7C6158;
+    opacity: 0.6;
+}
+
+.breadcrumbs-current {
+    color: #7C6158;
+    font-weight: 600;
+}
+
+@media (max-width: 560px) {
+    .breadcrumbs {
+        gap: 6px;
+        font-size: 12px;
+    }
+}
+
+/* ===== Боковые панели с узором + адаптивный блок контента ===== */
+
+/* <main> — сетка из трёх колонок: [панель] [контент] [панель].
+   Панели занимают всё свободное место до краёв экрана и растягиваются/сжимаются вместе с окном,
+   узор внутри масштабируется под их ширину. Когда окно уже 1200px + 2 минимальные панели,
+   сжимается уже сам блок контента, а панели остаются минимальной ширины. */
+main{
+    --content-max: 1200px;  /* максимальная ширина блока контента */
+    --side-min: 56px;       /* минимальная ширина панели */
+    --side-w: max(var(--side-min), calc((100% - var(--content-max)) / 2));
+
+    display: grid;
+    grid-template-columns: var(--side-w) minmax(0, 1fr) var(--side-w);
+}
+
+main > .content_box{
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+}
+
+main::before,
+main::after{
+    content: '';
+    grid-row: 1;
+    background-image: url('./images/side-pattern.svg');
+    background-repeat: repeat;
+    /* узор по ширине панели; на очень широких экранах клетка не больше, чем при 360px,
+       а лишнее место добирается повтором узора */
+    background-size: min(100%, 360px) auto;
+    background-position: right top;  /* целый узор у контейнера, обрезка — у края экрана */
+    opacity: .5;                     /* полупрозрачность как в Figma (сам SVG непрозрачный) */
+    pointer-events: none;
+}
+
+main::before{ grid-column: 1; }
+main::after{ grid-column: 3; transform: scaleX(-1); } /* справа зеркально */
+
+/* на узких экранах (там же включается бургер) панели убираем, контент на всю ширину */
+@media (max-width: 880px){
+    main{
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    main > .content_box{
+        grid-column: 1;
+    }
+
+    main::before,
+    main::after{
+        display: none;
+    }
 }
