@@ -76,6 +76,34 @@
             <div class="content_box">
                 <nav class="breadcrumbs" id="breadcrumbs" aria-label="Хлебные крошки">
                 </nav>
+
+                <!-- 3D-модель ткацкого станка. Управление и логика — в loom-viewer.js -->
+                <section class="model-viewer" id="modelViewer" data-model="./models/TkatskiyStanok.glb" aria-labelledby="modelViewerTitle">
+                    <h2 class="model-viewer__title" id="modelViewerTitle">Ткацкий станок</h2>
+
+                    <div class="model-viewer__stage">
+                        <canvas class="model-viewer__canvas" tabindex="0" aria-label="Трёхмерная модель ткацкого станка. Перетаскивайте, чтобы вращать, колесом мыши приближайте и отдаляйте, нажмите, чтобы узнать больше."></canvas>
+
+                        <p class="model-viewer__status" role="status">Загрузка модели…</p>
+
+                        <p class="model-viewer__hint">Вращайте и приближайте модель, нажмите на станок — узнаете больше</p>
+
+                        <!-- Карточка открывается по клику на станок. Текст можно свободно заменить на свой -->
+                        <aside class="model-info" aria-hidden="true" aria-labelledby="modelInfoTitle">
+                            <button class="model-info__close" type="button" aria-label="Закрыть">×</button>
+                            <h3 class="model-info__title" id="modelInfoTitle">Ткацкий станок</h3>
+                            <p>Ткацкий станок — приспособление, на котором из нитей делают ткань. Продольные нити (основу) натягивают на станке, а поперечную нить (уток) проводят между ними: нити переплетаются, и получается полотно.</p>
+
+                            <h4>Как это происходит</h4>
+                            <ol>
+                                <li>Нити основы натягивают между валами станка.</li>
+                                <li>Ремизки поднимают одни нити и опускают другие — между ними открывается зев.</li>
+                                <li>В зев пропускают уток, а затем бердо прибивает его к готовому полотну.</li>
+                            </ol>
+                            <p>Порядок, в котором поднимаются нити основы, определяет переплетение и рисунок ткани.</p>
+                        </aside>
+                    </div>
+                </section>
             </div>
         </div>
     </main>
@@ -166,5 +194,6 @@
     </footer>
 
     <script src="./script.js" defer></script>
+    <script src="./loom-viewer.js" defer></script>
 </body>
 </html>
