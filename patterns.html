@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Виртуальный музей Череповецкого узорного ткачества</title>
+    <title>Узоры — Виртуальный музей Череповецкого узорного ткачества</title>
     <link rel="icon" href="./icons/Logo.svg">
     <link rel="stylesheet" href="./styles.css">
 </head>
@@ -74,12 +74,47 @@
     <main>
         <div class="content_box">
             <div class="content_box">
-    <nav class="breadcrumbs" id="breadcrumbs"
-         aria-label="Хлебные крошки">
-    </nav>
+                <nav class="breadcrumbs" id="breadcrumbs" aria-label="Хлебные крошки">
+                </nav>
 
-    <!-- Остальное содержимое страницы -->
-</div>
+                <section class="patterns-explorer" id="patternsExplorer" data-initial-tab="colors" aria-labelledby="patternsExplorerHeading">
+                    <h2 class="patterns-explorer__heading" id="patternsExplorerHeading">Ознакомьтесь с элементами узоров, их значением и создайте свой уникальный узор!</h2>
+
+                    <div class="patterns-explorer__table">
+                        <div class="patterns-explorer__tabs" role="tablist" aria-label="Что рассмотреть">
+                            <button class="patterns-explorer__tab" type="button" role="tab" id="patternsTabPatterns" data-tab="patterns" aria-selected="false" aria-controls="patternsPanel">Элементы узоров</button>
+                            <button class="patterns-explorer__tab" type="button" role="tab" id="patternsTabColors" data-tab="colors" aria-selected="false" aria-controls="patternsPanel">Значение цветов</button>
+                        </div>
+
+                        <div class="patterns-explorer__body" id="patternsPanel" role="tabpanel">
+                            <!-- слева: кнопки с узорами или цветами (создаются скриптом из данных в patterns-explorer.js) -->
+                            <div class="patterns-explorer__choices">
+                                <div class="patterns-explorer__grid" role="group"></div>
+                                <a class="patterns-explorer__create" href="#">Создать свой узор</a>
+                            </div>
+
+                            <!-- справа: информация о выбранном элементе -->
+                            <div class="patterns-explorer__info" aria-live="polite">
+                                <div class="patterns-explorer__swatch"></div>
+                                <div class="patterns-explorer__text">
+                                    <p class="patterns-explorer__kind"></p>
+                                    <h3 class="patterns-explorer__name"></h3>
+                                    <p class="patterns-explorer__desc"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- под таблицей: разновидности выбранного узора (заполняется скриптом, пока скрыто) -->
+                    <div class="patterns-varieties" hidden>
+                        <div class="patterns-varieties__head">
+                            <h3 class="patterns-varieties__title">Разновидности элемента</h3>
+                            <p class="patterns-varieties__count"></p>
+                        </div>
+                        <ul class="patterns-varieties__list"></ul>
+                    </div>
+                </section>
+            </div>
         </div>
     </main>
 
@@ -169,5 +204,6 @@
     </footer>
 
     <script src="./script.js" defer></script>
+    <script src="./patterns-explorer.js" defer></script>
 </body>
 </html>

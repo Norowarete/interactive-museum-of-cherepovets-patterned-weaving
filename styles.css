@@ -729,3 +729,392 @@ main::after{ grid-column: 3; transform: scaleX(-1); } /* справа зерка
     .model-viewer__hint,
     .model-viewer__status{ transition: none; }
 }
+
+/* ===== Страница «Узоры»: таблица «Элементы узоров / Значение цветов» ===== */
+
+.patterns-explorer{
+    padding: 24px 0 56px;
+}
+
+.patterns-explorer__heading{
+    margin: 0 0 32px;
+    font-family: 'BonaNova', 'Inter', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+    line-height: 1.2;
+    color: #5C3329;
+}
+
+.patterns-explorer__table{
+    border: 1px solid #7C6158;
+}
+
+/* --- вкладки --- */
+.patterns-explorer__tabs{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid #7C6158;
+}
+
+.patterns-explorer__tab{
+    appearance: none;
+    margin: 0;
+    padding: 12px 16px;
+    border: none;
+    background-color: transparent;
+    color: #7C6158;
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1.4;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color .2s ease, color .2s ease;
+}
+.patterns-explorer__tab + .patterns-explorer__tab{
+    border-left: 1px solid #7C6158;
+}
+.patterns-explorer__tab:hover{
+    background-color: rgba(124, 97, 88, 0.12);
+}
+.patterns-explorer__tab[aria-selected="true"]{
+    background-color: #7C6158;
+    color: #EFE6D6;
+}
+.patterns-explorer__tab:focus-visible{
+    outline: 2px solid #5C3329;
+    outline-offset: -4px;
+}
+.patterns-explorer__tab[aria-selected="true"]:focus-visible{
+    outline-color: #EFE6D6;
+}
+
+/* --- тело таблицы: слева выбор, справа описание --- */
+.patterns-explorer__body{
+    display: grid;
+    grid-template-columns: minmax(300px, 40%) 1fr;
+}
+
+.patterns-explorer__choices{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 28px;
+    border-right: 1px solid #7C6158;
+}
+
+.patterns-explorer__grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.patterns-explorer__item{
+    appearance: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    margin: 0;
+    padding: 14%;
+    border: 1px solid #7C6158;
+    background-color: #F4ECDD;
+    color: #7C6158;
+    cursor: pointer;
+    transition: background-color .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.patterns-explorer__item svg{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.patterns-explorer__item:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(92, 51, 41, 0.18);
+}
+.patterns-explorer__item:focus-visible{
+    outline: 2px solid #5C3329;
+    outline-offset: 2px;
+}
+/* кнопка-цвет: вся закрашена своим цветом */
+.patterns-explorer__item--color{
+    padding: 0;
+    background-color: var(--swatch);
+}
+/* выбранная кнопка: рамка вокруг (у узоров ещё и инверсия цветов) */
+.patterns-explorer__item.is-selected{
+    outline: 2px solid #5C3329;
+    outline-offset: 3px;
+}
+.patterns-explorer__item:not(.patterns-explorer__item--color).is-selected{
+    background-color: #7C6158;
+    color: #EFE6D6;
+}
+
+.patterns-explorer__create{
+    display: block;
+    padding: 12px 16px;
+    background-color: #7C6158;
+    color: #EFE6D6;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    transition: background-color .2s ease, color .2s ease;
+}
+.patterns-explorer__create:hover{
+    background-color: #6A5047;
+    color: #EFE6D6;
+}
+.patterns-explorer__create:focus-visible{
+    outline: 2px solid #5C3329;
+    outline-offset: 2px;
+}
+
+/* --- правая ячейка: образец + текст --- */
+.patterns-explorer__info{
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    padding: 32px 40px;
+}
+
+.patterns-explorer__swatch{
+    flex: 0 0 clamp(120px, 30%, 210px);
+    aspect-ratio: 1;
+}
+/* образец цвета: переливающаяся шерстяная ткань */
+.patterns-explorer__swatch--color{
+    background-color: var(--swatch);
+    background-image:
+        radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 55%),
+        radial-gradient(circle at 72% 82%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0) 60%),
+        repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.05) 0 2px, rgba(0, 0, 0, 0) 2px 4px),
+        repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 0 2px, rgba(255, 255, 255, 0) 2px 4px);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.14);
+}
+/* образец узора: мотив крупно на светлом фоне */
+.patterns-explorer__swatch--pattern{
+    position: relative;
+    border: 1px solid #7C6158;
+    background-color: #F4ECDD;
+    color: #7C6158;
+}
+.patterns-explorer__swatch--pattern svg{
+    position: absolute;
+    top: 12%;
+    left: 12%;
+    width: 76%;
+    height: 76%;
+}
+
+.patterns-explorer__text{
+    min-width: 0;
+}
+.patterns-explorer__kind{
+    margin: 0 0 6px;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    color: #7C6158;
+}
+.patterns-explorer__name{
+    margin: 0 0 16px;
+    font-family: 'BonaNova', 'Inter', serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    line-height: 1.2;
+    color: #5C3329;
+}
+.patterns-explorer__desc{
+    margin: 0;
+    max-width: 34em;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: #7C6158;
+}
+
+.patterns-explorer__info.is-changing{
+    animation: patternsExplorerFade .3s ease;
+}
+@keyframes patternsExplorerFade{
+    from{ opacity: 0; transform: translateY(4px); }
+    to{ opacity: 1; transform: none; }
+}
+
+@media (max-width: 760px){
+    .patterns-explorer__body{
+        grid-template-columns: 1fr;
+    }
+    .patterns-explorer__choices{
+        padding: 20px;
+        border-right: none;
+        border-bottom: 1px solid #7C6158;
+    }
+    .patterns-explorer__info{
+        padding: 24px 20px;
+        gap: 20px;
+    }
+    .patterns-explorer__heading{
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 520px){
+    .patterns-explorer__tab{
+        padding: 10px 8px;
+        font-size: 0.88rem;
+    }
+    .patterns-explorer__info{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .patterns-explorer__swatch{
+        flex: none;
+        width: 150px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .patterns-explorer__item,
+    .patterns-explorer__tab,
+    .patterns-explorer__create{ transition: none; }
+    .patterns-explorer__info.is-changing{ animation: none; }
+    .patterns-explorer__item:hover{ transform: none; }
+}
+
+/* --- разновидности выбранного узора (под таблицей) --- */
+.patterns-varieties{
+    margin-top: 56px;
+}
+.patterns-varieties[hidden]{
+    display: none;
+}
+
+.patterns-varieties__head{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 10px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid #7C6158;
+}
+.patterns-varieties__title{
+    margin: 0;
+    font-family: 'BonaNova', 'Inter', serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+    line-height: 1.2;
+    color: #5C3329;
+}
+.patterns-varieties__count{
+    margin: 4px 0 0;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    color: #7C6158;
+}
+
+.patterns-varieties__list{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.patterns-variety{
+    display: grid;
+    grid-template-columns: minmax(150px, 23%) 1fr;
+    border: 1px solid #5C3329;
+}
+.patterns-variety--reverse{
+    grid-template-columns: 1fr minmax(150px, 23%);
+}
+
+.patterns-variety__art{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    border-right: 1px solid #5C3329;
+    color: #7C6158;
+}
+.patterns-variety--reverse .patterns-variety__art{
+    order: 2;
+    border-right: none;
+    border-left: 1px solid #5C3329;
+}
+.patterns-variety__art svg,
+.patterns-variety__art img{
+    display: block;
+    width: 100%;
+    max-width: 140px;
+    height: auto;
+}
+
+.patterns-variety__body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 26px 32px;
+}
+.patterns-variety__name{
+    margin: 0 0 14px;
+    font-family: 'BonaNova', 'Inter', serif;
+    font-weight: 700;
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+    line-height: 1.2;
+    color: #5C3329;
+}
+.patterns-variety__text{
+    margin: 0;
+    max-width: 52em;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: #7C6158;
+}
+
+.patterns-varieties.is-changing .patterns-variety{
+    animation: patternsExplorerFade .35s ease both;
+}
+.patterns-varieties.is-changing .patterns-variety:nth-child(2){ animation-delay: .06s; }
+.patterns-varieties.is-changing .patterns-variety:nth-child(3){ animation-delay: .12s; }
+
+@media (max-width: 640px){
+    .patterns-varieties{
+        margin-top: 40px;
+    }
+    .patterns-varieties__head{
+        margin-bottom: 24px;
+    }
+    .patterns-varieties__list{
+        gap: 20px;
+    }
+    /* на узких экранах рисунок всегда сверху, текст под ним */
+    .patterns-variety,
+    .patterns-variety--reverse{
+        grid-template-columns: 1fr;
+    }
+    .patterns-variety__art,
+    .patterns-variety--reverse .patterns-variety__art{
+        order: 0;
+        padding: 18px;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid #5C3329;
+    }
+    .patterns-variety__art svg,
+    .patterns-variety__art img{
+        max-width: 110px;
+    }
+    .patterns-variety__body{
+        padding: 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .patterns-varieties.is-changing .patterns-variety{ animation: none; }
+}
